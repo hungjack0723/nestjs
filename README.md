@@ -1,2 +1,2 @@
-# nestjs
+# Side project
 Side project
