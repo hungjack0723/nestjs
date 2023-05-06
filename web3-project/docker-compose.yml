@@ -1,0 +1,12 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    restart: always
+    env_file: .env  # 從 .env 檔案中讀取環境變數
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}  # 設定資料庫名稱
+      POSTGRES_USER: ${POSTGRES_USER}    # 設定使用者名稱
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}  # 設定使用者密碼
+    ports:
+      - "5432:5432"  # 將容器的 5432 port 對應到主機的 5432 port
