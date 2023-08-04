@@ -74,7 +74,7 @@ describe('UserController', () => {
       };
       jest.spyOn(userService, 'update').mockResolvedValue(user);
 
-      expect(await controller.update(user)).toBe(user);
+      expect(await controller.update(1, user)).toBe(user);
     });
   });
 

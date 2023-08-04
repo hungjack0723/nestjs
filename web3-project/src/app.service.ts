@@ -7,6 +7,7 @@ import { UpdateUserDto } from './dto/updateUser.dto';
 import { Body, Get, Param, Post, Put, Delete } from '@nestjs/common';
 
 export class UserService {
+  logger: any;
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
@@ -30,9 +31,12 @@ export class UserService {
 
   @ApiBody({ type: UpdateUserDto })
   @ApiResponse({ status: 200, description: 'Update user.' })
-  @Put()
-  async update(@Body() updateUserDto: UpdateUserDto): Promise<User> {
-    const user = await this.userRepository.findOne({ where: { id: 1 } });
+  @Put(':id')
+  async update(
+    @Param('id') id: number,
+    @Body() updateUserDto: UpdateUserDto,
+  ): Promise<User> {
+    const user = await this.userRepository.findOne({ where: { id } });
     user.email = updateUserDto.email;
     user.name = updateUserDto.name;
     return this.userRepository.save(user);
