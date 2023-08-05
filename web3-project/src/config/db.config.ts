@@ -13,6 +13,7 @@ const baseConfig: DataSourceOptions = {
 // nestjs typeorm 初始化
 export const ormConfig: DataSourceOptions = {
   ...baseConfig,
+  url: process.env.DATABASE_URL,
   entities: ['dist/entity/*.entity{.js,.ts}'],
 };
 

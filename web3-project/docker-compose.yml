@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 services:
   db:
     image: postgres
@@ -10,3 +10,27 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}  # 設定使用者密碼
     ports:
       - "5432:5432"  # 將容器的 5432 port 對應到主機的 5432 port
+    networks: 
+      - my-server_demo
+
+  api:
+    image: api
+    build:
+      dockerfile: Dockerfile
+      context: .
+    env_file: .env
+    # Run a command against the development stage of the image
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      PORT: 3000
+    command: npm run start:dev
+    ports:
+      - 8080:3000
+    volumes:
+      - .:/usr/src/app
+    networks: 
+      - my-server_demo
+networks:
+  my-server_demo:
